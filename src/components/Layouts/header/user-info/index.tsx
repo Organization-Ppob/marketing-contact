@@ -23,9 +23,9 @@ export function UserInfo() {
     setIsOpen(false);
     try {
       // Sign out dengan redirect: true untuk memastikan session dihapus dan redirect terjadi
-      await signOut({ 
+      await signOut({
         redirect: true,
-        callbackUrl: "/auth/sign-in" 
+        callbackUrl: window.location.origin + "/auth/sign-in",
       });
     } catch (error) {
       console.error("Logout error:", error);
@@ -40,7 +40,7 @@ export function UserInfo() {
     return (
       <Link
         href="/auth/sign-in"
-        className="flex items-center gap-2 rounded-lg border border-primary bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-dark"
+        className="hover:bg-primary-dark flex items-center gap-2 rounded-lg border border-primary bg-primary px-4 py-2 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-dark"
       >
         <LogInIcon />
         <span>Login</span>
@@ -48,7 +48,8 @@ export function UserInfo() {
     );
   }
 
-  const userName = (session?.user as any)?.name || session?.user?.email || "User";
+  const userName =
+    (session?.user as any)?.name || session?.user?.email || "User";
   const userEmail = session?.user?.email || "";
   const userRole = (session?.user as any)?.role || "";
 
@@ -72,7 +73,7 @@ export function UserInfo() {
         <figure className="flex items-center gap-3">
           {/* Avatar Siluet */}
           <div className="relative">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-200 dark:border-gray-600 dark:bg-gray-700">
               <svg
                 className="h-8 w-8 text-gray-400 dark:text-gray-500"
                 fill="currentColor"
@@ -115,7 +116,7 @@ export function UserInfo() {
         <figure className="flex items-center gap-2.5 px-5 py-3.5">
           {/* Avatar Siluet */}
           <div className="relative">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-gray-300 bg-gray-200 dark:border-gray-600 dark:bg-gray-700">
               <svg
                 className="h-8 w-8 text-gray-400 dark:text-gray-500"
                 fill="currentColor"
@@ -141,9 +142,7 @@ export function UserInfo() {
             </div>
 
             {userRole && (
-              <div className="leading-none text-gray-6">
-                Role: {userRole}
-              </div>
+              <div className="leading-none text-gray-6">Role: {userRole}</div>
             )}
           </figcaption>
         </figure>
