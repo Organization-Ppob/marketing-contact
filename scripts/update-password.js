@@ -48,7 +48,7 @@ async function updatePassword() {
     console.log('\n=== SQL Query (for reference) ===');
     console.log(`UPDATE "User" SET password = '${hashedPassword}', "updatedAt" = NOW() WHERE email = '${email.toLowerCase()}';`);
     console.log('\n=== Atau gunakan API ===');
-    console.log(`curl -X POST http://localhost:3000/api/reset-password \\`);
+    console.log(`curl -X POST http://152.42.235.232:3000/api/reset-password \\`);
     console.log(`  -H "Content-Type: application/json" \\`);
     console.log(`  -d '{"email":"${email}","password":"${password}"}'`);
     console.log('\n');

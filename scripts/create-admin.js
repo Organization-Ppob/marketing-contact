@@ -28,7 +28,7 @@ async function createAdmin() {
   console.log(`INSERT INTO "User" (email, password, name, role, "isActive", "createdAt", "updatedAt")`);
   console.log(`VALUES ('${email}', '${hashedPassword}', '${name}', 'admin', true, NOW(), NOW());`);
   console.log('\n=== Atau gunakan API ===');
-  console.log(`curl -X POST http://localhost:3000/api/setup \\`);
+  console.log(`curl -X POST http://152.42.235.232:3000/api/setup \\`);
   console.log(`  -H "Content-Type: application/json" \\`);
   console.log(`  -d '{"email":"${email}","password":"${password}","name":"${name}"}'`);
   console.log('\n');
