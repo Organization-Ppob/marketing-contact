@@ -20,20 +20,10 @@ export function UserInfo() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    const url = process.env.NEXTAUTH_URL;
     setIsOpen(false);
-    try {
-      // Sign out dengan redirect: true untuk memastikan session dihapus dan redirect terjadi
-      await signOut({
-        redirect: true,
-        redirectTo: "/auth/sign-in",
-      });
-    } catch (error) {
-      console.error("Logout error:", error);
-      // Jika ada error, tetap redirect ke sign-in
-      router.push("/auth/sign-in");
-      router.refresh();
-    }
+    await signOut({
+      callbackUrl: "/auth/sign-in",
+    });
   };
 
   // Jika belum login, tampilkan tombol login
