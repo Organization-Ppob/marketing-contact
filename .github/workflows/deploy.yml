@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     name: Deploy Marketing Contact (Prod)
@@ -12,6 +13,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
 
       - name: Deploy Dashboard
         shell: bash
@@ -24,6 +30,14 @@ jobs:
           echo "Listing files"
           ls -la
 
+          echo "Stopping old container..."
           docker compose -f docker-compose.main.yml down || true
-          docker compose -f docker-compose.main.yml build
+
+          echo "Building new image..."
+          docker compose -f docker-compose.main.yml build --no-cache
+
+          echo "Starting container..."
           docker compose -f docker-compose.main.yml up -d
+
+          echo "Cleaning unused images..."
+          docker image prune -f
