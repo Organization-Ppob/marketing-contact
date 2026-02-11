@@ -1,19 +1,20 @@
-FROM node:20-alpine
+FROM node:20-slim
 
 WORKDIR /app
 
-# Copy semua source dulu
-COPY . .
+# Install OpenSSL (penting untuk Prisma)
+RUN apt-get update && apt-get install -y openssl
 
-# Install dependencies
+COPY package.json yarn.lock ./
+COPY prisma ./prisma
+
 RUN yarn install --frozen-lockfile
 
-# Generate prisma client (optional tapi bagus)
-RUN npx prisma generate
+COPY . .
 
-# Build Next.js
+RUN npx prisma generate
 RUN yarn build
 
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+CMD ["node", ".next/standalone/server.js"]
