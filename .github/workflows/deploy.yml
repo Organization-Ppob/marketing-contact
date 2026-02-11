@@ -18,6 +18,7 @@ jobs:
         run: |
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
           echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
+          echo "AUTH_SECRET=${{ secrets.NEXTAUTH_URL }}" >> .env
 
       - name: Deploy Dashboard
         shell: bash
