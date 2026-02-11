@@ -13,6 +13,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     process.env.NEXTAUTH_SECRET ||
     "default-secret-change-in-production",
 
+  trustHost: true,
   providers: [
     Credentials({
       name: "Credentials",
