@@ -1,24 +1,29 @@
-name: Deploy NextJS 
+name: Deploy Prod Marketing Contact
 
 on:
   push:
-    branches: [main]
-
+    branches:
+      - main
 jobs:
   deploy:
-    runs-on: self-hosted
+    name: Deploy Marketing Contact (Prod)
+    runs-on: [self-hosted]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Deploy Dashboard
+        shell: bash
+        run: |
+          set -e
 
-      - name: Build Next.js
-        run: npm run build
+          echo "Workspace: $GITHUB_WORKSPACE"
+          cd "$GITHUB_WORKSPACE"
 
-      - name: Sync files to server app folder
-        run: rsync -a --delete ./ /var/www/marketing-contact/
+          echo "Listing files"
+          ls -la
 
-      - name: Restart Linux service
-        run: sudo systemctl restart marketing-contact
+          docker compose -f docker-compose.main.yml down || true
+          docker compose -f docker-compose.main.yml build
+          docker compose -f docker-compose.main.yml up -d

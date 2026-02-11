@@ -1,0 +1,12 @@
+services:
+  fe-dashboard:
+    container_name: marketing-contact
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: marketing-contact:prod
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    env_file:
+      - .env
